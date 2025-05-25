@@ -1,8 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head><title>KNN Graph</title></head>
+<head>
+    <title>Plant Predictor</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: inline-block; width: 120px; }
+        input { padding: 5px; width: 100px; }
+        button { padding: 8px 15px; background: #4CAF50; color: white; border: none; }
+        .result { margin-top: 20px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
 <body>
-  <h1>KNN Accuracy Graph</h1>
-  <img src="data:image/png;base64,{{ graph_base64 }}" alt="KNN Graph" />
+    <h1>What Plant Should You Grow?</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-row">
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Oblicz</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        <h3>Best Plant for You:</h3>
+        <p>{{ prediction }}</p>
+    </div>
+    {% endif %}
+{% if error %}
+<div class="error-message" style="color: red; margin: 20px 0; padding: 10px; background: #ffeeee;">
+    {{ error }}
+</div>
+{% endif %}
 </body>
 </html>

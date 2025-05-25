@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import show_graph
+from . import views
 
 urlpatterns = [
-    path('graph/', show_graph, name='show_graph'),
+    path('heart/', views.predict_plant),
+
 ]
